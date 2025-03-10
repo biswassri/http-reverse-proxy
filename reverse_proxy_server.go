@@ -9,10 +9,11 @@ import (
 	"time"
 )
 
-func runReverseProxy() {
+func runReverseProxy(errChan chan<- error) {
 
 	originServerURL, err := url.Parse("http://localhost:8081")
 	if err != nil {
+		errChan <- fmt.Errorf("invalid Origin Server URL: %v", err)
 		return
 	}
 
@@ -62,11 +63,5 @@ func runReverseProxy() {
 	err = s.ListenAndServe()
 	//
 	log.Printf("Server on %s exited: %v", s.Addr, err)
-
-}
-
-func main() {
-
-	go runOriginServer()
-	go runReverseProxy()
+	errChan <- err
 }

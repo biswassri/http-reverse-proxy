@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func runOriginServer() {
+func runOriginServer(errChan chan<- error) {
 
 	originServerHandler := http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 		fmt.Printf("[origin server] received request at:%s originServerHandler %s %s\n ", time.Now(), req.URL.Path, req.Method)
@@ -29,5 +29,6 @@ func runOriginServer() {
 	log.Printf("Starting origin server on %s ", s.Addr)
 	err := s.ListenAndServe()
 	log.Printf("Server on %s exited: %v", s.Addr, err)
+	errChan <- err
 
 }
