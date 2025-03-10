@@ -100,12 +100,17 @@ In order to make the server more secure we do the following:
 
 - **Sanitization of the incoming requests:** Validating the incoming requests to ensure it does not contain a malicious payload, such as a large string that could be used to exploit vulnerabilities (like buffer overflows)
 
-- **HTTP Header Filtering:** Removing or sanitizing headers that could be exploited.
+- **HTTP Header Filtering:** Removing or sanitizing headers that could be exploited. The reverse proxy can be configured to hide internal server details by stripping unnecessary headers. Enforcing secure HTTP headers like X-Frame-Options, Content-Security-Policy 
+ and ensuring error messages do not expose stack traces or sensitive information can also help in security of the server.
 
 - **Rate-limiting and Throttling the incoming requests:** A sudden large number of incoming requests can cause a Denial of Service (DoS) attack. In order to prevent this kind of attack we need to implement
   a request task queue with timeouts to drop and delay requests under heavy load.
 
+- **Prevent injection attacks:** Setting limits on request body size and enforcing strict input request validation can prevent attackers from sending excessively large payloads that overload the system and result in service unavailability and non-responsiveness.
+
 - **Adding Encryption:** Using TLS to encrypt all the traffic from the client to the server and from the backend to the proxy server
+
+- **Monitor logs:** Monitoring and analysing logs for unusual traffic patterns and dynamically updating blocklists. This can help block web-crawler bots from accessing and overloading the reverse-proxy server. 
 
 
 ### What resources (including programming tool assistants) did you use to build your implementation?
