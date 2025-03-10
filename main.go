@@ -3,10 +3,16 @@ package main
 import "log"
 
 func main() {
-	errCh := make(chan error, 2)
+	errChOrigin := make(chan error, 1)
+	errChRProxy := make(chan error, 1)
 
-	go runOriginServer(errCh)
-	go runReverseProxy(errCh)
-	err := <-errCh
-	log.Fatal("Server exited with error:", err)
+	go runOriginServer(errChOrigin)
+	go runReverseProxy(errChRProxy)
+
+	select {
+	case err := <-errChOrigin:
+		log.Fatal("Origin server exited ", err)
+	case err := <-errChRProxy:
+		log.Fatal("Reverse proxy server exited", err)
+	}
 }

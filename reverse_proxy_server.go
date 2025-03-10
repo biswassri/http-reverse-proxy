@@ -9,9 +9,11 @@ import (
 	"time"
 )
 
+const baseHost = "http://localhost"
+
 func runReverseProxy(errChan chan<- error) {
 
-	originServerURL, err := url.Parse("http://localhost:8081")
+	originServerURL, err := url.Parse(fmt.Sprintf("%s:8081", baseHost))
 	if err != nil {
 		errChan <- fmt.Errorf("invalid Origin Server URL: %v", err)
 		return
@@ -19,24 +21,23 @@ func runReverseProxy(errChan chan<- error) {
 
 	reverseProxyServerHandler := http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 		fmt.Printf("[reverse proxy] received request at:%s reverProxyServerHandler %s %s\n ", time.Now(), req.URL.Path, req.Method)
-		//modifying the original request
-		req.Host = originServerURL.Host
-		req.URL.Scheme = originServerURL.Scheme
-		req.URL.Host = originServerURL.Host
-		req.RequestURI = ""
+		//Creating a proxy request with url path from origin server
 
-		/*_, err := http.DefaultClient.Do(req)
+		proxyReq, err := http.NewRequest(req.Method, originServerURL.String()+req.URL.Path, req.Body)
 		if err != nil {
-			w.WriteHeader(http.StatusBadGateway)
+			http.Error(w, "Error creating request", http.StatusInternalServerError)
 			return
-		}*/
+		}
+		proxyReq.Header = req.Header.Clone()
 
-		resp, err := http.DefaultClient.Do(req)
+		resp, err := http.DefaultClient.Do(proxyReq)
 		if err != nil {
 			w.WriteHeader(http.StatusBadGateway)
 			_, _ = fmt.Fprint(w, err)
 			return
 		}
+		//close response
+		defer resp.Body.Close()
 
 		// Copy headers
 		for key, values := range resp.Header {
