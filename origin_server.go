@@ -26,7 +26,7 @@ func runOriginServer(errChan chan<- error) {
 		IdleTimeout:  15 * time.Second,
 	}
 	//Origin Server running on port:8081
-	log.Printf("Starting origin server on %s ", s.Addr)
+	log.Printf("Starting origin server on localhost port %s ", s.Addr)
 	err := s.ListenAndServe()
 	log.Printf("Server on %s exited: %v", s.Addr, err)
 	errChan <- err

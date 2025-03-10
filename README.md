@@ -12,9 +12,13 @@ source: https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/
 
 ## Project Structure
 
-├── main.go                 # Starting point of the application which runs both the servers concurrently
-├── origin_server.go        # Implementation of the Origin Server
-└── reverse_proxy_server.go # Implementation of the Reverse Proxy Server
+```
+│── main.go             # Starting point of the application which runs both the servers concurrently
+│── origin_server.go    # Implementation of the Origin Server
+│── reverse_proxy.go    # Implementation of the Reverse Proxy Server
+│── server_test.go      # Test suite for Origin Server and Reverse Proxy Server testing
+
+```
 
 ## Prerequisite 
 Go is required to be installed in order to run this project. Run the `go version` command to verify this.  
@@ -29,6 +33,10 @@ From a new terminal, run the following command:
 
 In order to explore this further one can deploy an application at http://localhost:8081/test and run the above curl
 to test out the reverse-proxy
+
+### Testing
+
+Running `go test -v` helps run all the test cases in the `server_test.go`
 
 ### What resources did you use to build your implementation?
 Below are the resources used:
