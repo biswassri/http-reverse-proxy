@@ -12,9 +12,9 @@ source: https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/
 
 ## Project Structure
 
-├── main.go        # Starting point of the application which runs both the servers concurrently  
-├── origin_server.go # Implementation of the Origin Server 
-└── reverse_proxy_server.go # Implementation of the Reverse Proxy Server 
+├── main.go                 # Starting point of the application which runs both the servers concurrently
+├── origin_server.go        # Implementation of the Origin Server
+└── reverse_proxy_server.go # Implementation of the Reverse Proxy Server
 
 ## Prerequisite 
 Go is required to be installed in order to run this project. Run the `go version` command to verify this.  
