@@ -23,7 +23,7 @@ source: https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/
 ## Prerequisite 
 Go is required to be installed in order to run this project. Run the `go version` command to verify this.  
 
-### How could someone get started with your codebase?
+### How could someone get started with the codebase?
 
 Clone the repository locally and run the following commands:
 - `go install` or `go build`
@@ -38,14 +38,8 @@ to test out the reverse-proxy
 
 Running `go test -v` helps run all the test cases in the `server_test.go`
 
-### What resources did you use to build your implementation?
-Below are the resources used:
-- https://go.dev/src/net/http/client.go
-- https://pkg.go.dev/net/http#hdr-Clients_and_Transports
-- https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/
 
-
-### Explain any design decisions you made, including limitations of the system
+### Design Decisions
 - Modularization:
   - I separated the code into modules (origin server, reverse proxy, main) for better readability and ease of testing.
 
@@ -59,7 +53,7 @@ Below are the resources used:
 - Centralized Error Handling with Channels:
   - I have created separate channels to handle errors from both servers and then merged into as single channel so the main function can handle failures immediately.
 
-### How would you scale this?
+### Scalability Options
 
 The scaling of a reverse-proxy server would entail increasing its capacity to handle more incoming traffic efficiently, adding redundancy and removing single-point of failures.
 
@@ -94,7 +88,7 @@ The scaling of a reverse-proxy server would entail increasing its capacity to ha
     - Orchestrations like Kubernetes enhances health checks by integrating them directly into the pod lifecycle using [readiness and liveness probes](https://kubernetes.io/docs/concepts/configuration/liveness-readiness-startup-probes/)
     - Alerting systems can help notify when predefined thresholds are exceeded—such as when error rate spikes, slower response times or server health checks failure
 
-### How would you make it more secure?
+### Security
 
 In order to make the server more secure we do the following:
 
