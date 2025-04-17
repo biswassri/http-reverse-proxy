@@ -105,9 +105,3 @@ In order to make the server more secure we do the following:
 - **Adding Encryption:** Using TLS to encrypt all the traffic from the client to the server and from the backend to the proxy server
 
 - **Monitor logs:** Monitoring and analysing logs for unusual traffic patterns and dynamically updating blocklists. This can help block web-crawler bots from accessing and overloading the reverse-proxy server. 
-
-
-### What resources (including programming tool assistants) did you use to build your implementation?
-
-The above linked resources along with the auto-generated code from GoLand IDE
-
